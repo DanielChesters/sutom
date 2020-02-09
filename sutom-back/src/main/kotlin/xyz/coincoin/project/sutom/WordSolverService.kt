@@ -10,9 +10,13 @@ class WordSolverService {
         }
 
         return if (wordToGuess == currentWord) {
-            wordToGuess.map { GOOD_PLACE }.toTypedArray()
+            wordToGuess
+                    .map { GOOD_PLACE }
+                    .toTypedArray()
         } else {
-            arrayOf(NOT_FOUND)
+            wordToGuess
+                    .map { NOT_FOUND }
+                    .toTypedArray()
         }
     }
 }
