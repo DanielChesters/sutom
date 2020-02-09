@@ -1,26 +1,30 @@
 package xyz.coincoin.project.sutom
 
 import xyz.coincoin.project.sutom.LetterResult.*
+import java.text.Normalizer
+import java.text.Normalizer.Form.NFD
 
 class WordSolverService {
     fun compareWords(wordToGuess: String, currentWord: String): Array<LetterResult> {
-        if (wordToGuess.length != currentWord.length) {
+        val wordToGuessWithoutAccentLowerCase = removeAccentAndLowerCase(wordToGuess)
+        val currentWordWithoutAccentLowerCase = removeAccentAndLowerCase(currentWord)
+        if (wordToGuessWithoutAccentLowerCase.length != currentWordWithoutAccentLowerCase.length) {
             throw WordSolverServiceException("The current word does not have the same length that the word to guess")
         }
 
-        return if (wordToGuess == currentWord) {
-            wordToGuess
+        return if (wordToGuessWithoutAccentLowerCase == currentWordWithoutAccentLowerCase) {
+            wordToGuessWithoutAccentLowerCase
                     .map { GOOD_PLACE }
                     .toTypedArray()
         } else {
-            wordToGuess.indices
+            wordToGuessWithoutAccentLowerCase.indices
                     .map { i ->
-                        val currentLetter = currentWord[i]
+                        val currentLetter = currentWordWithoutAccentLowerCase[i]
                         when {
-                            wordToGuess[i] == currentLetter -> {
+                            wordToGuessWithoutAccentLowerCase[i] == currentLetter -> {
                                 GOOD_PLACE
                             }
-                            wordToGuess.contains(currentLetter) -> {
+                            wordToGuessWithoutAccentLowerCase.contains(currentLetter) -> {
                                 WRONG_PLACE
                             }
                             else -> {
@@ -31,4 +35,7 @@ class WordSolverService {
                     .toTypedArray()
         }
     }
+
+    private fun removeAccentAndLowerCase(wordToGuess: String) = Normalizer.normalize(wordToGuess.toLowerCase(), NFD)
+            .replace("\\p{M}".toRegex(), "")
 }

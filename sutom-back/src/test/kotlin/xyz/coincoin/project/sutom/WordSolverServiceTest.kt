@@ -46,4 +46,14 @@ class WordSolverServiceTest {
     fun `inverse letters in a 2 letters word should return an array of two wrong place`() =
             assertThat(service.compareWords("ab", "ba"))
                     .isEqualTo(arrayOf(WRONG_PLACE, WRONG_PLACE))
+
+    @Test
+    fun `Ignore case in service call`() =
+            assertThat(service.compareWords("ab", "AB"))
+                    .isEqualTo(arrayOf(GOOD_PLACE, GOOD_PLACE))
+
+    @Test
+    fun `Ignore special characters in service call`() =
+            assertThat(service.compareWords("éç", "ec"))
+                    .isEqualTo(arrayOf(GOOD_PLACE, GOOD_PLACE))
 }
