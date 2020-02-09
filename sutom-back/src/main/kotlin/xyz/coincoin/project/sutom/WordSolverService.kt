@@ -1,7 +1,6 @@
 package xyz.coincoin.project.sutom
 
-import xyz.coincoin.project.sutom.LetterResult.GOOD_PLACE
-import xyz.coincoin.project.sutom.LetterResult.NOT_FOUND
+import xyz.coincoin.project.sutom.LetterResult.*
 
 class WordSolverService {
     fun compareWords(wordToGuess: String, currentWord: String): Array<LetterResult> {
@@ -16,10 +15,16 @@ class WordSolverService {
         } else {
             wordToGuess.indices
                     .map { i ->
-                        if (wordToGuess[i] == currentWord[i]) {
+                        val currentLetter = currentWord[i]
+                        val letterToGuess = wordToGuess[i]
+                        if (letterToGuess == currentLetter) {
                             GOOD_PLACE
                         } else {
-                            NOT_FOUND
+                            if (wordToGuess.contains(currentLetter)) {
+                                WRONG_PLACE
+                            } else {
+                                NOT_FOUND
+                            }
                         }
                     }
                     .toTypedArray()
