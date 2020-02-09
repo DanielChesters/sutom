@@ -1,5 +1,8 @@
 package xyz.coincoin.project.sutom
 
+import xyz.coincoin.project.sutom.LetterResult.GOOD_PLACE
+import xyz.coincoin.project.sutom.LetterResult.NOT_FOUND
+
 class WordSolverService {
     fun compareWords(wordToGuess: String, currentWord: String): Array<LetterResult> {
         if (wordToGuess.length != currentWord.length) {
@@ -7,9 +10,9 @@ class WordSolverService {
         }
 
         return if (wordToGuess == currentWord) {
-            arrayOf(LetterResult.GOOD_PLACE)
+            wordToGuess.map { GOOD_PLACE }.toTypedArray()
         } else {
-            arrayOf(LetterResult.NOT_FOUND)
+            arrayOf(NOT_FOUND)
         }
     }
 }

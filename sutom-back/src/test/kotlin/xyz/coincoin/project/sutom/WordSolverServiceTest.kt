@@ -5,21 +5,23 @@ import assertk.assertions.hasMessage
 import assertk.assertions.isEqualTo
 import assertk.assertions.isFailure
 import org.junit.jupiter.api.Test
+import xyz.coincoin.project.sutom.LetterResult.GOOD_PLACE
+import xyz.coincoin.project.sutom.LetterResult.NOT_FOUND
 
 class WordSolverServiceTest {
 
     private val service = WordSolverService()
 
     @Test
-    fun `same letter should return a result array with one good place result`() {
+    fun `same letter should return an array with one good place result`() {
         assertThat(service.compareWords("a", "a"))
-                .isEqualTo(arrayOf(LetterResult.GOOD_PLACE))
+                .isEqualTo(arrayOf(GOOD_PLACE))
     }
 
     @Test
-    fun `different letters should return a array with one not found result`() {
+    fun `different letters should return an array with one not found result`() {
         assertThat(service.compareWords("a", "b"))
-                .isEqualTo(arrayOf(LetterResult.NOT_FOUND))
+                .isEqualTo(arrayOf(NOT_FOUND))
     }
 
     @Test
@@ -27,5 +29,12 @@ class WordSolverServiceTest {
         assertThat { service.compareWords("ab", "a") }
                 .isFailure()
                 .hasMessage("The current word does not have the same length that the word to guess")
+    }
+
+    @Test
+    fun `two same letters should return an array with two good place results`() {
+        assertThat(service.compareWords("aa", "aa"))
+                .isEqualTo(arrayOf(GOOD_PLACE, GOOD_PLACE))
+
     }
 }
