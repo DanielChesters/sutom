@@ -16,13 +16,14 @@ class WordSolverService {
             wordToGuess.indices
                     .map { i ->
                         val currentLetter = currentWord[i]
-                        val letterToGuess = wordToGuess[i]
-                        if (letterToGuess == currentLetter) {
-                            GOOD_PLACE
-                        } else {
-                            if (wordToGuess.contains(currentLetter)) {
+                        when {
+                            wordToGuess[i] == currentLetter -> {
+                                GOOD_PLACE
+                            }
+                            wordToGuess.contains(currentLetter) -> {
                                 WRONG_PLACE
-                            } else {
+                            }
+                            else -> {
                                 NOT_FOUND
                             }
                         }
