@@ -14,8 +14,14 @@ class WordSolverService {
                     .map { GOOD_PLACE }
                     .toTypedArray()
         } else {
-            wordToGuess
-                    .map { NOT_FOUND }
+            wordToGuess.indices
+                    .map { i ->
+                        if (wordToGuess[i] == currentWord[i]) {
+                            GOOD_PLACE
+                        } else {
+                            NOT_FOUND
+                        }
+                    }
                     .toTypedArray()
         }
     }

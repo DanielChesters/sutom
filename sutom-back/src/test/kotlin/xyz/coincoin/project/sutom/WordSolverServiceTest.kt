@@ -43,4 +43,10 @@ class WordSolverServiceTest {
         assertThat(service.compareWords("aa", "bb"))
                 .isEqualTo(arrayOf(NOT_FOUND, NOT_FOUND))
     }
+
+    @Test
+    fun `one difference in two letters word should return an array with one good place and one not found`() {
+        assertThat(service.compareWords("aa", "ab"))
+                .isEqualTo(arrayOf(GOOD_PLACE, NOT_FOUND))
+    }
 }
